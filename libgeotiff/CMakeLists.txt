@@ -171,24 +171,24 @@ IF(WITH_TIFF)
       FIND_PACKAGE(TIFF REQUIRED)
     endif ()
 
-    IF(TIFF_FOUND)
-        # Confirm required API is available
-        INCLUDE(CheckFunctionExists)
-        SET(CMAKE_REQUIRED_LIBRARIES ${TIFF_LIBRARIES})
+    # IF(TIFF_FOUND)
+    #     # Confirm required API is available
+    #     INCLUDE(CheckFunctionExists)
+    #     SET(CMAKE_REQUIRED_LIBRARIES ${TIFF_LIBRARIES})
 
-        CHECK_FUNCTION_EXISTS(TIFFOpen HAVE_TIFFOPEN)
-        IF(NOT HAVE_TIFFOPEN)
-            SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
-            MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFOpen function not found")
-        ENDIF()
+    #     CHECK_FUNCTION_EXISTS(TIFFOpen HAVE_TIFFOPEN)
+    #     IF(NOT HAVE_TIFFOPEN)
+    #         SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
+    #         MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFOpen function not found")
+    #     ENDIF()
 
-        CHECK_FUNCTION_EXISTS(TIFFMergeFieldInfo HAVE_TIFFMERGEFIELDINFO)
-        IF(NOT HAVE_TIFFMERGEFIELDINFO)
-            SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
-            MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFMergeFieldInfo function not found. libtiff 3.6.0 Beta or later required. Please upgrade or use an older version of libgeotiff")
-        ENDIF()
+    #     CHECK_FUNCTION_EXISTS(TIFFMergeFieldInfo HAVE_TIFFMERGEFIELDINFO)
+    #     IF(NOT HAVE_TIFFMERGEFIELDINFO)
+    #         SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
+    #         MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFMergeFieldInfo function not found. libtiff 3.6.0 Beta or later required. Please upgrade or use an older version of libgeotiff")
+    #     ENDIF()
 
-        INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
+    #     INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
         ADD_DEFINITIONS(-DHAVE_TIFF=1)
     ENDIF(TIFF_FOUND)
 ENDIF(WITH_TIFF)
@@ -363,10 +363,10 @@ SET_TARGET_PROPERTIES(${GEOTIFF_LIBRARY_TARGET} PROPERTIES
    OUTPUT_NAME ${GEOTIFF_LIB_NAME})
 
 TARGET_LINK_LIBRARIES(${GEOTIFF_LIBRARY_TARGET}
-    ${TIFF_LIBRARIES}
+    TIFF::TIFF
     ${PROJ_LIBRARIES}
-    ${ZLIB_LIBRARIES}
-    ${JPEG_LIBRARIES})
+    ZLIB::ZLIB
+    JPEG::JPEG)
 
 # INSTALL(TARGETS ${GEOTIFF_ARCHIVE_TARGET} ${GEOTIFF_LIBRARY_TARGET}
 #	RUNTIME DESTINATION ${GEOTIFF_BIN_DIR}
