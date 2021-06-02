@@ -171,7 +171,7 @@ IF(WITH_TIFF)
       FIND_PACKAGE(TIFF REQUIRED)
     endif ()
 
-    # IF(TIFF_FOUND)
+    IF(TIFF_FOUND)
     #     # Confirm required API is available
     #     INCLUDE(CheckFunctionExists)
     #     SET(CMAKE_REQUIRED_LIBRARIES ${TIFF_LIBRARIES})
